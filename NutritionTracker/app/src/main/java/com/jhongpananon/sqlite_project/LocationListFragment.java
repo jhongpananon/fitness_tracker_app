@@ -23,18 +23,19 @@ import java.util.Collections;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LocationListFragment extends Fragment implements MapFragment.LocationChangeListener {
-
+public class LocationListFragment extends Fragment implements MapFragment.LocationChangeListener
+{
     private MyRecyclerViewAdapter adapter;
 
-    public LocationListFragment() {
+    public LocationListFragment()
+    {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         View rootView = inflater.inflate(R.layout.fragment_location, container, false);
 
         Log.i("test", "hi");
@@ -42,32 +43,36 @@ public class LocationListFragment extends Fragment implements MapFragment.Locati
         return rootView;
     }
 
-
     @Override
-    public void onStop() {
+    public void onStop()
+    {
         super.onStop();
         System.out.println("onStop gets called");
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
         System.out.println("onResume gets called");
     }
 
     @Override
-    public void onPause() {
+    public void onPause()
+    {
         super.onPause();
         System.out.println("onPause gets called");
     }
 
     @Override
-    public void onLocationChange(Bundle bundle) {
-        Log.i("callback", "hi from locationlistfrag");
+    public void onLocationChange(Bundle bundle)
+    {
+        Log.i("callback", "Location changed");
         setRecycleView(bundle);
     }
 
-    public void setRecycleView(Bundle bundle) {
+    public void setRecycleView(Bundle bundle)
+    {
         ArrayList<String> rows = new ArrayList<>();
         if (bundle != null) {
             ArrayList<String> names = bundle.getStringArrayList(MapFragment.LOC_NAME);
@@ -122,14 +127,12 @@ public class LocationListFragment extends Fragment implements MapFragment.Locati
                     ClipData clip = ClipData.newPlainText("text", adapter.getItem(position).split("\n", 4)[2]);
                     clipboard.setPrimaryClip(clip);
 
-                    Toast.makeText(getContext(), "                                Copied: \n" + adapter.getItem(position).split("\n",4)[2], Toast.LENGTH_SHORT).show();
-//                Toast.makeText(getContext(), "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Copied: \n" + adapter.getItem(position).split("\n",4)[2], Toast.LENGTH_SHORT).show();
                 }
             });
 
             recyclerView.setAdapter(adapter);
 
         }
-
     }
 }

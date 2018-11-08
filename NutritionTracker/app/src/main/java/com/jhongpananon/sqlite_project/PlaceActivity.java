@@ -24,8 +24,8 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 
-public class PlaceActivity extends FragmentActivity implements OnMapReadyCallback {
-
+public class PlaceActivity extends FragmentActivity implements OnMapReadyCallback
+{
     private GoogleMap mMap;
     private LocationManager mLocationManager;
     private PlaceAutocompleteFragment mAutocompleteFragment;
@@ -33,7 +33,8 @@ public class PlaceActivity extends FragmentActivity implements OnMapReadyCallbac
     final int ACCESS_FINE_LOCATION_PERMISSION_REQUEST_CODE = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -67,7 +68,8 @@ public class PlaceActivity extends FragmentActivity implements OnMapReadyCallbac
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(GoogleMap googleMap)
+    {
         mMap = googleMap;
 
         // If ACCESS_FINE_LOCATION permission is granted, then set map position to current GPS location

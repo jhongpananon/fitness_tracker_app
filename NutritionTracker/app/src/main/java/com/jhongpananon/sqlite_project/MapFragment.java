@@ -63,8 +63,8 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapFragment extends Fragment implements OnMapReadyCallback{
-
+public class MapFragment extends Fragment implements OnMapReadyCallback
+{
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
@@ -117,12 +117,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     /**
      * Interface for callback to pass data to another fragment
      */
-    public interface LocationChangeListener {
+    public interface LocationChangeListener
+    {
         public void onLocationChange(Bundle bundle);
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context)
+    {
         super.onAttach(context);
 
         // This makes sure that the container activity has implemented
@@ -135,14 +137,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         }
     }
 
-    public MapFragment() {
+    public MapFragment()
+    {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+                             Bundle savedInstanceState)
+    {
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
@@ -165,7 +168,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         list_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                setListLocation();
                 if (mLikelyPlaceNames.size() > 0) {
                     TabLayout tabLayout = getActivity().findViewById(R.id.tabs);
                     TabLayout.Tab tab = tabLayout.getTabAt(1);
@@ -226,7 +228,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
         super.onActivityCreated(savedInstanceState);
         if(getActivity()!=null) {
 
@@ -234,23 +237,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     }
 
     @Override
-    public void onStop() {
+    public void onStop()
+    {
         super.onStop();
     }
-
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//
-//        //Do your stuff here
-//
-//    }
 
     /**
      * Saves the state of the map when the activity is paused.
      */
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState)
+    {
         if (mMap != null) {
             outState.putParcelable(KEY_CAMERA_POSITION, mMap.getCameraPosition());
             outState.putParcelable(KEY_LOCATION, mLastKnownLocation);
@@ -259,23 +256,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     }
 
     /**
-     * Sets up the options menu.
-     * @param menu The options menu.
-     * @return Boolean.
-     */
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getActivity().getMenuInflater().inflate(R.menu.current_place_menu, menu);
-//        return true;
-//    }
-
-    /**
      * Handles a click on the menu option to get a place.
      * @param item The menu item to handle.
      * @return Boolean.
      */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         if (item.getItemId() == R.id.option_get_place) {
             showCurrentPlace(TYPE_CAFE);
         }
@@ -287,7 +274,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
      * This callback is triggered when the map is ready to be used.
      */
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(GoogleMap map)
+    {
         mMap = map;
 
         // Use a custom info window adapter to handle multiple lines of text in the
@@ -329,7 +317,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     /**
      * Gets the current location of the device, and positions the map's camera.
      */
-    private void getDeviceLocation() {
+    private void getDeviceLocation()
+    {
         /*
          * Get the best and most recent location of the device, which may be null in rare
          * cases when a location is not available.
@@ -366,7 +355,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     /**
      * Prompts the user for permission to use the device location.
      */
-    private void getLocationPermission() {
+    private void getLocationPermission()
+    {
         /*
          * Request location permission, so that we can get the location of the
          * device. The result of the permission request is handled by a callback,
@@ -389,7 +379,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[],
-                                           @NonNull int[] grantResults) {
+                                           @NonNull int[] grantResults)
+    {
         mLocationPermissionGranted = false;
         switch (requestCode) {
             case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
@@ -407,7 +398,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
      * Prompts the user to select the current place from a list of likely places, and shows the
      * current place on the map - provided the user has granted location permission.
      */
-    private void showCurrentPlace(final Integer type) {
+    private void showCurrentPlace(final Integer type)
+    {
         mPlaceType = type;
         if (mMap == null) {
             return;
@@ -446,10 +438,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                                 for (PlaceLikelihood placeLikelihood : likelyPlaces) {
                                     List<Integer> placeType = placeLikelihood.getPlace().getPlaceTypes();
                                     for (int j = 0; j < placeType.size(); j++) {
-//                                        Log.i("asdf", String.valueOf(placeType.get(j)));
                                         if (placeType.get(j) == mPlaceType) {
-                                            // Build a list of likely places to show the user.
-//                                        Log.i("asdf", String.valueOf(placeType.get(j)));
                                             mLikelyPlaceNames.add((String) placeLikelihood.getPlace().getName());
                                             mLikelyPlaceAddresses.add((String) placeLikelihood.getPlace()
                                                     .getAddress());
@@ -502,7 +491,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
      * Process what the user searched in Google Map Search Bar, and shows the
      * selected location and predicted results - provided the user has granted location permission.
      */
-    private void showSearchedPlace(Place place) {
+    private void showSearchedPlace(Place place)
+    {
         if (mMap == null) {
             return;
         }
@@ -516,14 +506,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
             String arr [] = placeName.split(" ", 3);
             Log.i("split 0", arr[0]);
             String query = arr[0];
-//            if (arr.length > 1) {
-//                Log.i("split 1", arr[1]);
-//                query += " " + arr[1];
-//                Log.i("query", query);
-//            }
-            // Get the likely places - that is, the businesses and other points of interest that
-            // are the best match for the device's current location.
-            @SuppressWarnings("MissingPermission") final
             Task<AutocompletePredictionBufferResponse> results = mGeoDataClient.getAutocompletePredictions(query, null, null);
             results.addOnCompleteListener(new OnCompleteListener<AutocompletePredictionBufferResponse>() {
                 @Override
@@ -545,10 +527,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
                         predictions.release();
 
-//                      mLikelyPlaceNames = new ArrayList<>();
-//                      mLikelyPlaceAddresses = new ArrayList<>();
-//                      mLikelyPlaceAttributions = new ArrayList<>();
-//                      mLikelyPlaceLatLngs = new ArrayList<>();
                         final int listSize = resultList.size();
                         for (int i =0; i < listSize; i++) {
                             final int count = i;
@@ -598,13 +576,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     /**
      * Displays a form allowing the user to select a place from a list of likely places.
      */
-    private void openPlacesDialog() {
+    private void openPlacesDialog()
+    {
         // Ask the user to choose the place where they are now.
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.i("daig", "begin");
-                // The "which" argument contains the position of the selected item.
                 LatLng markerLatLng = mLikelyPlaceLatLngs.get(which);
                 String markerSnippet = mLikelyPlaceAddresses.get(which);
                 Log.i("daig", "almost begin");
@@ -612,14 +590,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                     markerSnippet = markerSnippet + "\n" + mLikelyPlaceAttributions.get(which)
                             + "\n" + mLikelyPlaceRatings.get(which);
                 }
-                // Add a marker for the selected place, with an info window
-                // showing information about that place.
                 mMap.addMarker(new MarkerOptions()
                         .title(mLikelyPlaceNames.get(which))
                         .position(markerLatLng)
                         .snippet(markerSnippet));
                 Log.i("daig", "mid");
-                // Position the map's camera at the location of the marker.
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng,
                         DEFAULT_ZOOM));
             }
@@ -643,11 +618,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         Log.i("daig", "end");
     }
 
-    /**
-     * Updates the map's UI settings based on whether the user has granted location permission.
-     * Show where user location is at
-     */
-    private void updateLocationUI() {
+    private void updateLocationUI()
+    {
         if (mMap == null) {
             return;
         }
@@ -666,12 +638,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         }
     }
 
-    /**
-     * Add markers onto the map
-     */
-    private void addMarker(int index) {
+    private void addMarker(int index)
+    {
         Log.i("index", String.valueOf(index));
-        // The "which" argument contains the position of the selected item.
         LatLng markerLatLng = mLikelyPlaceLatLngs.get(index);
         String markerSnippet = mLikelyPlaceAddresses.get(index);
         if (mLikelyPlaceAttributions.get(index) != null) {
@@ -685,8 +654,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
             color = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE);
         }
 
-        // Add a marker for the selected place, with an info window
-        // showing information about that place.
         mMap.addMarker(new MarkerOptions()
                 .title(mLikelyPlaceNames.get(index))
                 .position(markerLatLng)
@@ -694,22 +661,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 .icon(color));
 
         if (index == 0) {
-            // Position the map's camera at the location of the marker.
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng,
                     DEFAULT_ZOOM));
         }
     }
 
-    /**
-     * Pass location information to LocationListFragment by callback
-     */
-    private void setListLocation() {
+    private void setListLocation()
+    {
         if (mLikelyPlaceNames != null)
         {
             if (mLikelyPlaceNames.size() > 0) {
-//                Intent intent = new Intent(this, LocationActivity.class);
                 Bundle bundle = new Bundle();
-//                bundle.putStringArrayList(LOC_ID, (ArrayList<String>) mLikelyPlaceId);
                 bundle.putStringArrayList(LOC_NAME, (ArrayList<String>) mLikelyPlaceNames);
                 bundle.putStringArrayList(LOC_ADDR, (ArrayList<String>) mLikelyPlaceAddresses);
                 bundle.putStringArrayList(LOC_ATTR, (ArrayList<String>) mLikelyPlaceAttributions);
@@ -719,12 +681,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 mCallback.onLocationChange(bundle);
 
             } else {
-//                Toast.makeText(getActivity(), "Search a location first!", Toast.LENGTH_SHORT).show();
                 Snackbar.make(getActivity().findViewById(android.R.id.content), "Search a location first!", Snackbar.LENGTH_SHORT)
                         .show();
             }
         } else {
-//            Toast.makeText(getActivity(), "Search a location first!", Toast.LENGTH_SHORT).show();
             Snackbar.make(getActivity().findViewById(android.R.id.content), "Search a location first!", Snackbar.LENGTH_SHORT)
                     .show();
         }

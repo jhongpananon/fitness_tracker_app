@@ -12,26 +12,26 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryAdapter extends FragmentPagerAdapter implements MapFragment.LocationChangeListener{
-
-
+public class CategoryAdapter extends FragmentPagerAdapter implements MapFragment.LocationChangeListener
+{
     /** Context of the app */
     private Context mContext;
     private List<Fragment> mFrags= new ArrayList<>();
 
-
-    public CategoryAdapter(Context context, FragmentManager fm) {
-
+    public CategoryAdapter(Context context, FragmentManager fm)
+    {
         super(fm);
         mContext = context;
     }
 
-    public void addFrag(Fragment frag) {
+    public void addFrag(Fragment frag)
+    {
         mFrags.add(frag);
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public Fragment getItem(int position)
+    {
         Fragment frag = null;
         if (position == 0) {
             frag = mFrags.get(position);
@@ -42,12 +42,14 @@ public class CategoryAdapter extends FragmentPagerAdapter implements MapFragment
     }
 
     @Override
-    public int getCount() {
+    public int getCount()
+    {
         return 2;
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
+    public CharSequence getPageTitle(int position)
+    {
         CharSequence seq = "";
         if (position == 0) {
             seq = mContext.getString(R.string.tab_maps_title);
@@ -58,7 +60,8 @@ public class CategoryAdapter extends FragmentPagerAdapter implements MapFragment
     }
 
     @Override
-    public void onLocationChange(Bundle bundle) {
+    public void onLocationChange(Bundle bundle)
+    {
         Log.i("callback", "hi from adapter");
         LocationListFragment frag = (LocationListFragment) mFrags.get(1);
         if (frag != null) {

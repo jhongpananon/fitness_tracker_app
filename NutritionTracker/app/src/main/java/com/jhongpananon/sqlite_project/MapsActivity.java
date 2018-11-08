@@ -12,8 +12,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 
 
 public class MapsActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener
-        , MapFragment.LocationChangeListener {
-
+        , MapFragment.LocationChangeListener
+{
     private CameraPosition mCameraPosition;
 
 
@@ -26,7 +26,8 @@ public class MapsActivity extends AppCompatActivity implements ViewPager.OnPageC
     CategoryAdapter adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         // Retrieve location and camera position from saved instance state.
@@ -55,7 +56,8 @@ public class MapsActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     @Override
-    public void onLocationChange(Bundle bundle) {
+    public void onLocationChange(Bundle bundle)
+    {
         Log.i("callback", "hi");
         if (adapter != null) {
             adapter.onLocationChange(bundle);
@@ -63,17 +65,14 @@ public class MapsActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
     @Override
-    public void onPageSelected(int position) {
+    public void onPageSelected(int position)
+    {
         Log.i("page selected", "onPageSelected Called");
     }
 
     @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
+    public void onPageScrollStateChanged(int state) { }
 }
