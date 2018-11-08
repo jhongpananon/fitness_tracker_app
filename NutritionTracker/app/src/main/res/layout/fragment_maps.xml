@@ -36,6 +36,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:textColor="@android:color/black"
-        android:background="@drawable/border"
         android:foreground="?android:attr/selectableItemBackground"/>
 </RelativeLayout>

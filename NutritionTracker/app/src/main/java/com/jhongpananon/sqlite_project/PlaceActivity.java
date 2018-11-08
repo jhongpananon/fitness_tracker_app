@@ -52,8 +52,6 @@ public class PlaceActivity extends FragmentActivity implements OnMapReadyCallbac
         mAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place var1) {
-                MapsActivityCurrentPlace obj = new MapsActivityCurrentPlace();
-                obj.searchOnMap(var1);
 
                 // TODO: Get info about the selected place.
                 Log.i(this.getClass().getName(), "TAKE Place: " + var1.getName());

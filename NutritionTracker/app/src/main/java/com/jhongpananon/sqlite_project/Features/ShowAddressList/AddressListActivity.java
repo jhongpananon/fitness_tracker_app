@@ -4,14 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,9 +19,9 @@ import com.jhongpananon.sqlite_project.Database.DatabaseQueryClass;
 import com.jhongpananon.sqlite_project.Features.CreateAddress.Address;
 import com.jhongpananon.sqlite_project.Features.CreateAddress.AddressCreateDialogFragment;
 import com.jhongpananon.sqlite_project.Features.CreateAddress.AddressCreateListener;
+import com.jhongpananon.sqlite_project.MapsActivity;
 import com.jhongpananon.sqlite_project.R;
 import com.jhongpananon.sqlite_project.Util.Config;
-import com.jhongpananon.sqlite_project.MapsActivityCurrentPlace;
 //import com.jhongpananon.sqlite_project.mapwithmarker.MapsMarkerActivity;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -110,7 +107,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCre
     }
 
     private void openMapsActivity() {
-        Intent intent = new Intent(this, MapsActivityCurrentPlace.class);
+        Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
 
