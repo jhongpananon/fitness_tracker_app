@@ -55,8 +55,6 @@ public class AddressCreateDialogFragment extends DialogFragment {
 
         nameEditText = view.findViewById(R.id.addressNameEditText);
         registrationEditText = view.findViewById(R.id.registrationEditText);
-        phoneEditText = view.findViewById(R.id.phoneEditText);
-        emailEditText = view.findViewById(R.id.emailEditText);
         createButton = view.findViewById(R.id.createButton);
         cancelButton = view.findViewById(R.id.cancelButton);
 
@@ -68,10 +66,8 @@ public class AddressCreateDialogFragment extends DialogFragment {
             public void onClick(View view) {
                 nameString = nameEditText.getText().toString();
                 registrationNumber = Integer.parseInt(registrationEditText.getText().toString());
-                phoneString = phoneEditText.getText().toString();
-                emailString = emailEditText.getText().toString();
 
-                Address address = new Address(-1, nameString, registrationNumber, phoneString, emailString);
+                Address address = new Address(-1, nameString, registrationNumber);
 
                 DatabaseQueryClass databaseQueryClass = new DatabaseQueryClass(getContext());
 

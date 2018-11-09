@@ -25,6 +25,9 @@ import com.jhongpananon.sqlite_project.Util.Config;
 //import com.jhongpananon.sqlite_project.mapwithmarker.MapsMarkerActivity;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import android.support.v4.widget.DrawerLayout;
+import android.support.design.widget.NavigationView;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +42,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCre
     private RecyclerView recyclerView;
     private AddressListRecyclerViewAdapter addressListRecyclerViewAdapter;
 
-//    private DrawerLayout mDrawerLayout;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,42 +71,44 @@ public class AddressListActivity extends AppCompatActivity implements AddressCre
             }
         });
 
-        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openMapsActivity();
-            }
-        });
+//        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+//        fab2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                openMapsActivity();
+//            }
+//        });
 
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // for add back arrow in action bar
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_icon);
 //        mDrawerLayout = findViewById(R.id.nav_view);
-//        NavigationView navigationView = findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(
-//                new NavigationView.OnNavigationItemSelectedListener() {
-//                    @Override
-//                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-//                        // set item as selected to persist highlight
-//                        menuItem.setChecked(true);
-//                        // close drawer when item is tapped
-//
-//                        // Add code here to update the UI based on the item selected
-//                        // For example, swap UI fragments here
-//                        int id = menuItem.getItemId();
-//                        switch(id)
-//                        {
-//                            case R.id.nav_map: {
-//                                Log.i("main", "map clicked");
-//                                openMapsActivity();
-//                                finish();
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+
+                        // Add code here to update the UI based on the item selected
+                        // For example, swap UI fragments here
+                        int id = menuItem.getItemId();
+                        switch(id)
+                        {
+                            case R.id.nav_map: {
+                                Log.i("main", "map clicked");
+                                openMapsActivity();
+                                finish();
 //                                mDrawerLayout.closeDrawers();
-//                                break;
-//                            }
-//                            default:
-//                                return true;
-//                        }
-//                        return true;
-//                    }
-//                });
+                                break;
+                            }
+                            default:
+                                return true;
+                        }
+                        return true;
+                    }
+                });
     }
 
     private void openMapsActivity() {

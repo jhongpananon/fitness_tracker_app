@@ -46,8 +46,6 @@ public class AddressListRecyclerViewAdapter extends RecyclerView.Adapter<CustomV
 
         holder.nameTextView.setText(address.getName());
         holder.registrationNumTextView.setText(String.valueOf(address.getRegistrationNumber()));
-        holder.emailTextView.setText(address.getEmail());
-        holder.phoneTextView.setText(address.getPhoneNumber());
 
         holder.crossButtonImageView.setOnClickListener(new View.OnClickListener() {
             @Override

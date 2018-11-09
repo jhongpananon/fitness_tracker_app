@@ -66,8 +66,6 @@ public class AddressUpdateDialogFragment extends DialogFragment {
 
         nameEditText = view.findViewById(R.id.addressNameEditText);
         registrationEditText = view.findViewById(R.id.registrationEditText);
-        phoneEditText = view.findViewById(R.id.phoneEditText);
-        emailEditText = view.findViewById(R.id.emailEditText);
         updateButton = view.findViewById(R.id.updateAddressInfoButton);
         cancelButton = view.findViewById(R.id.cancelButton);
 
@@ -79,21 +77,15 @@ public class AddressUpdateDialogFragment extends DialogFragment {
         if(mAddress!=null){
             nameEditText.setText(mAddress.getName());
             registrationEditText.setText(String.valueOf(mAddress.getRegistrationNumber()));
-            phoneEditText.setText(mAddress.getPhoneNumber());
-            emailEditText.setText(mAddress.getEmail());
 
             updateButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     nameString = nameEditText.getText().toString();
                     registrationNumber = Integer.parseInt(registrationEditText.getText().toString());
-                    phoneString = phoneEditText.getText().toString();
-                    emailString = emailEditText.getText().toString();
 
                     mAddress.setName(nameString);
                     mAddress.setRegistrationNumber(registrationNumber);
-                    mAddress.setPhoneNumber(phoneString);
-                    mAddress.setEmail(emailString);
 
                     long id = databaseQueryClass.updateAddressInfo(mAddress);
 

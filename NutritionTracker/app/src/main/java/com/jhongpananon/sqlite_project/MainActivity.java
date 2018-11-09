@@ -1,8 +1,10 @@
 package com.jhongpananon.sqlite_project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,12 +12,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
+    private DrawerLayout mDrawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -38,9 +42,39 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        mDrawerLayout = findViewById(R.id.nav_view);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // for add back arrow in action bar
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_icon);
+        final Intent mapIntent = new Intent(this, MapsActivity.class);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+
+                        // Add code here to update the UI based on the item selected
+                        // For example, swap UI fragments here
+                        int id = menuItem.getItemId();
+                        switch(id)
+                        {
+                            case R.id.nav_map: {
+                                Log.i("main", "map clicked");
+//                                launchMaps(null);
+//                                finish();
+                                mDrawerLayout.closeDrawers();
+                                break;
+                            }
+                            default:
+                                return true;
+                        }
+                        return true;
+                    }
+                });
     }
 
     @Override

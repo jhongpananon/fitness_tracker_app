@@ -35,8 +35,6 @@ public class DatabaseQueryClass {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Config.COLUMN_ADDRESS_NAME, address.getName());
         contentValues.put(Config.COLUMN_ADDRESS_REGISTRATION, address.getRegistrationNumber());
-        contentValues.put(Config.COLUMN_ADDRESS_PHONE, address.getPhoneNumber());
-        contentValues.put(Config.COLUMN_ADDRESS_EMAIL, address.getEmail());
 
         try {
             id = sqLiteDatabase.insertOrThrow(Config.TABLE_ADDRESS, null, contentValues);
@@ -74,10 +72,8 @@ public class DatabaseQueryClass {
                         int id = cursor.getInt(cursor.getColumnIndex(Config.COLUMN_ADDRESS_ID));
                         String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_ADDRESS_NAME));
                         long registrationNumber = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_ADDRESS_REGISTRATION));
-                        String email = cursor.getString(cursor.getColumnIndex(Config.COLUMN_ADDRESS_EMAIL));
-                        String phone = cursor.getString(cursor.getColumnIndex(Config.COLUMN_ADDRESS_PHONE));
 
-                        addressList.add(new Address(id, name, registrationNumber, email, phone));
+                        addressList.add(new Address(id, name, registrationNumber));
                     }   while (cursor.moveToNext());
 
                     return addressList;
@@ -118,10 +114,8 @@ public class DatabaseQueryClass {
                 int id = cursor.getInt(cursor.getColumnIndex(Config.COLUMN_ADDRESS_ID));
                 String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_ADDRESS_NAME));
                 long registrationNumber = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_ADDRESS_REGISTRATION));
-                String phone = cursor.getString(cursor.getColumnIndex(Config.COLUMN_ADDRESS_PHONE));
-                String email = cursor.getString(cursor.getColumnIndex(Config.COLUMN_ADDRESS_EMAIL));
 
-                address = new Address(id, name, registrationNumber, phone, email);
+                address = new Address(id, name, registrationNumber);
             }
         } catch (Exception e){
             Logger.d("Exception: " + e.getMessage());
@@ -144,8 +138,6 @@ public class DatabaseQueryClass {
         ContentValues contentValues = new ContentValues();
         contentValues.put(Config.COLUMN_ADDRESS_NAME, address.getName());
         contentValues.put(Config.COLUMN_ADDRESS_REGISTRATION, address.getRegistrationNumber());
-        contentValues.put(Config.COLUMN_ADDRESS_PHONE, address.getPhoneNumber());
-        contentValues.put(Config.COLUMN_ADDRESS_EMAIL, address.getEmail());
 
         try {
             rowCount = sqLiteDatabase.update(Config.TABLE_ADDRESS, contentValues,

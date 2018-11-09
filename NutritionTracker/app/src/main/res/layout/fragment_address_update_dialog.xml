@@ -26,42 +26,22 @@
         android:hint="@string/registration_no"
         android:inputType="number"/>
 
-    <EditText
-        android:id="@+id/phoneEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registrationEditText"
-        android:hint="@string/phone"
-        android:inputType="phone"/>
-
-    <EditText
-        android:id="@+id/emailEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneEditText"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"/>
-
     <Button
         android:id="@+id/updateAddressInfoButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditText"
+        android:text="@string/update"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/cancelButton"
-        android:text="@string/update"/>
+        app:layout_constraintTop_toBottomOf="@+id/registrationEditText" />
 
     <Button
         android:id="@+id/cancelButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditText"
-        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/cancel_button"
         app:layout_constraintLeft_toRightOf="@+id/createButton"
-        android:text="@string/cancel_button"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registrationEditText" />
 
 </android.support.constraint.ConstraintLayout>
