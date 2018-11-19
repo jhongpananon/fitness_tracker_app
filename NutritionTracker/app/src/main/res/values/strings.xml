@@ -6,6 +6,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_create_subject">CreateWorkoutActivity</string>
     <string name="registration_no">Number of Reps</string>
+    <string name="date">mm/dd/yyyy</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
     <string name="cross_image_content_description">Delete workout from SQLite database</string>

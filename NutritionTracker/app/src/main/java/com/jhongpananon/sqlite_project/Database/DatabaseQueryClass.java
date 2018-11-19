@@ -33,11 +33,12 @@ public class DatabaseQueryClass {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Config.COLUMN_ADDRESS_NAME, address.getName());
-        contentValues.put(Config.COLUMN_ADDRESS_REGISTRATION, address.getRegistrationNumber());
+        contentValues.put(Config.COLUMN_EXERCISE_NAME, address.getName());
+        contentValues.put(Config.COLUMN_EXERCISE_NUM_REPS, address.getRegistrationNumber());
+        contentValues.put(Config.COLUMN_EXERCISE_DATE, address.getDate());
 
         try {
-            id = sqLiteDatabase.insertOrThrow(Config.TABLE_ADDRESS, null, contentValues);
+            id = sqLiteDatabase.insertOrThrow(Config.TABLE_EXERCISE, null, contentValues);
         } catch (SQLiteException e){
             Logger.d("Exception: " + e.getMessage());
             Toast.makeText(context, "Operation failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -56,12 +57,12 @@ public class DatabaseQueryClass {
         Cursor cursor = null;
         try {
 
-            cursor = sqLiteDatabase.query(Config.TABLE_ADDRESS, null, null, null, null, null, null, null);
+            cursor = sqLiteDatabase.query(Config.TABLE_EXERCISE, null, null, null, null, null, null, null);
 
             /**
                  // If you want to execute raw query then uncomment below 2 lines. And comment out above line.
 
-                 String SELECT_QUERY = String.format("SELECT %s, %s, %s, %s, %s FROM %s", Config.COLUMN_ADDRESS_ID, Config.COLUMN_ADDRESS_NAME, Config.COLUMN_ADDRESS_REGISTRATION, Config.COLUMN_ADDRESS_EMAIL, Config.COLUMN_ADDRESS_PHONE, Config.TABLE_ADDRESS);
+                 String SELECT_QUERY = String.format("SELECT %s, %s, %s, %s, %s FROM %s", Config.COLUMN_EXERCISE_ID, Config.COLUMN_EXERCISE_NAME, Config.COLUMN_EXERCISE_NUM_REPS, Config.COLUMN_ADDRESS_EMAIL, Config.COLUMN_EXERCISE_DATE, Config.TABLE_EXERCISE);
                  cursor = sqLiteDatabase.rawQuery(SELECT_QUERY, null);
              */
 
@@ -69,11 +70,12 @@ public class DatabaseQueryClass {
                 if(cursor.moveToFirst()){
                     List<Address> addressList = new ArrayList<>();
                     do {
-                        int id = cursor.getInt(cursor.getColumnIndex(Config.COLUMN_ADDRESS_ID));
-                        String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_ADDRESS_NAME));
-                        long registrationNumber = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_ADDRESS_REGISTRATION));
+                        int id = cursor.getInt(cursor.getColumnIndex(Config.COLUMN_EXERCISE_ID));
+                        String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NAME));
+                        long registrationNumber = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NUM_REPS));
+                        long date = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_DATE));
 
-                        addressList.add(new Address(id, name, registrationNumber));
+                        addressList.add(new Address(id, name, registrationNumber, date));
                     }   while (cursor.moveToNext());
 
                     return addressList;
@@ -99,23 +101,23 @@ public class DatabaseQueryClass {
         Address address = null;
         try {
 
-            cursor = sqLiteDatabase.query(Config.TABLE_ADDRESS, null,
-                    Config.COLUMN_ADDRESS_REGISTRATION + " = ? ", new String[]{String.valueOf(registrationNum)},
+            cursor = sqLiteDatabase.query(Config.TABLE_EXERCISE, null,
+                    Config.COLUMN_EXERCISE_NUM_REPS + " = ? ", new String[]{String.valueOf(registrationNum)},
                     null, null, null);
 
             /**
                  // If you want to execute raw query then uncomment below 2 lines. And comment out above sqLiteDatabase.query() method.
 
-                 String SELECT_QUERY = String.format("SELECT * FROM %s WHERE %s = %s", Config.TABLE_ADDRESS, Config.COLUMN_ADDRESS_REGISTRATION, String.valueOf(registrationNum));
+                 String SELECT_QUERY = String.format("SELECT * FROM %s WHERE %s = %s", Config.TABLE_EXERCISE, Config.COLUMN_EXERCISE_NUM_REPS, String.valueOf(registrationNum));
                  cursor = sqLiteDatabase.rawQuery(SELECT_QUERY, null);
              */
 
             if(cursor.moveToFirst()){
-                int id = cursor.getInt(cursor.getColumnIndex(Config.COLUMN_ADDRESS_ID));
-                String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_ADDRESS_NAME));
-                long registrationNumber = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_ADDRESS_REGISTRATION));
-
-                address = new Address(id, name, registrationNumber);
+                int id = cursor.getInt(cursor.getColumnIndex(Config.COLUMN_EXERCISE_ID));
+                String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NAME));
+                long registrationNumber = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NUM_REPS));
+                long date = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_DATE));
+                address = new Address(id, name, registrationNumber, date);
             }
         } catch (Exception e){
             Logger.d("Exception: " + e.getMessage());
@@ -136,12 +138,13 @@ public class DatabaseQueryClass {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Config.COLUMN_ADDRESS_NAME, address.getName());
-        contentValues.put(Config.COLUMN_ADDRESS_REGISTRATION, address.getRegistrationNumber());
+        contentValues.put(Config.COLUMN_EXERCISE_NAME, address.getName());
+        contentValues.put(Config.COLUMN_EXERCISE_NUM_REPS, address.getRegistrationNumber());
+        contentValues.put(Config.COLUMN_EXERCISE_DATE, address.getDate());
 
         try {
-            rowCount = sqLiteDatabase.update(Config.TABLE_ADDRESS, contentValues,
-                    Config.COLUMN_ADDRESS_ID + " = ? ",
+            rowCount = sqLiteDatabase.update(Config.TABLE_EXERCISE, contentValues,
+                    Config.COLUMN_EXERCISE_ID + " = ? ",
                     new String[] {String.valueOf(address.getId())});
         } catch (SQLiteException e){
             Logger.d("Exception: " + e.getMessage());
@@ -159,8 +162,8 @@ public class DatabaseQueryClass {
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         try {
-            deletedRowCount = sqLiteDatabase.delete(Config.TABLE_ADDRESS,
-                                    Config.COLUMN_ADDRESS_REGISTRATION + " = ? ",
+            deletedRowCount = sqLiteDatabase.delete(Config.TABLE_EXERCISE,
+                                    Config.COLUMN_EXERCISE_NUM_REPS + " = ? ",
                                     new String[]{ String.valueOf(registrationNum)});
         } catch (SQLiteException e){
             Logger.d("Exception: " + e.getMessage());
@@ -180,9 +183,9 @@ public class DatabaseQueryClass {
         try {
             //for "1" delete() method returns number of deleted rows
             //if you don't want row count just use delete(TABLE_NAME, null, null)
-            sqLiteDatabase.delete(Config.TABLE_ADDRESS, null, null);
+            sqLiteDatabase.delete(Config.TABLE_EXERCISE, null, null);
 
-            long count = DatabaseUtils.queryNumEntries(sqLiteDatabase, Config.TABLE_ADDRESS);
+            long count = DatabaseUtils.queryNumEntries(sqLiteDatabase, Config.TABLE_EXERCISE);
 
             if(count==0)
                 deleteStatus = true;

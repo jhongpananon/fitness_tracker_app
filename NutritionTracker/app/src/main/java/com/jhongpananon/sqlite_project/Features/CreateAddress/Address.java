@@ -4,13 +4,13 @@ public class Address {
     private long id;
     private String name;
     private long registrationNumber;
-    private String phoneNumber;
-    private String email;
+    private long date;
 
-    public Address(int id, String name, long registrationNumber) {
+    public Address(int id, String name, long registrationNumber, long date) {
         this.id = id;
         this.name = name;
         this.registrationNumber = registrationNumber;
+        this.date = date;
     }
 
     public long getId() {
@@ -36,4 +36,7 @@ public class Address {
     public void setRegistrationNumber(long registrationNumber) {
         this.registrationNumber = registrationNumber;
     }
+
+    public long getDate() { return date; }
+    public void setDate(long date) { this.date = date; }
 }

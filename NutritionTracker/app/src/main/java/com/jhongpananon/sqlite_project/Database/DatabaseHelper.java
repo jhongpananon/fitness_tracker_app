@@ -35,12 +35,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         // Create tables SQL execution
-        String CREATE_ADDRESS_TABLE = "CREATE TABLE " + Config.TABLE_ADDRESS + "("
-                + Config.COLUMN_ADDRESS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + Config.COLUMN_ADDRESS_NAME + " TEXT NOT NULL, "
-                + Config.COLUMN_ADDRESS_REGISTRATION + " INTEGER NOT NULL UNIQUE, "
-                + Config.COLUMN_ADDRESS_PHONE + " TEXT, " //nullable
-                + Config.COLUMN_ADDRESS_EMAIL + " TEXT " //nullable
+        String CREATE_ADDRESS_TABLE = "CREATE TABLE " + Config.TABLE_EXERCISE + "("
+                + Config.COLUMN_EXERCISE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + Config.COLUMN_EXERCISE_NAME + " TEXT NOT NULL, "
+                + Config.COLUMN_EXERCISE_NUM_REPS + " INTEGER NOT NULL, "
+                + Config.COLUMN_EXERCISE_DATE + " INTEGER NOT NULL "
                 + ")";
 
         Logger.d("Table create SQL: " + CREATE_ADDRESS_TABLE);
@@ -53,7 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + Config.TABLE_ADDRESS);
+        db.execSQL("DROP TABLE IF EXISTS " + Config.TABLE_EXERCISE);
 
         // Create tables again
         onCreate(db);

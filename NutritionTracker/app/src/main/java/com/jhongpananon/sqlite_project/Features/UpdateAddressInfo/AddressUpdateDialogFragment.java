@@ -25,13 +25,14 @@ public class AddressUpdateDialogFragment extends DialogFragment {
 
     private EditText nameEditText;
     private EditText registrationEditText;
-    private EditText phoneEditText;
+    private EditText dateEditText;
     private EditText emailEditText;
     private Button updateButton;
     private Button cancelButton;
 
     private String nameString = "";
     private long registrationNumber = -1;
+    private long date = -1;
     private String phoneString = "";
     private String emailString = "";
 
@@ -66,6 +67,7 @@ public class AddressUpdateDialogFragment extends DialogFragment {
 
         nameEditText = view.findViewById(R.id.addressNameEditText);
         registrationEditText = view.findViewById(R.id.registrationEditText);
+        dateEditText = view.findViewById(R.id.dateEditText);
         updateButton = view.findViewById(R.id.updateAddressInfoButton);
         cancelButton = view.findViewById(R.id.cancelButton);
 
@@ -77,15 +79,23 @@ public class AddressUpdateDialogFragment extends DialogFragment {
         if(mAddress!=null){
             nameEditText.setText(mAddress.getName());
             registrationEditText.setText(String.valueOf(mAddress.getRegistrationNumber()));
+            dateEditText.setText(String.valueOf(mAddress.getDate()));
 
             updateButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     nameString = nameEditText.getText().toString();
-                    registrationNumber = Integer.parseInt(registrationEditText.getText().toString());
+                    if ("".equals(registrationEditText.getText().toString())) {
+                        registrationNumber = 1;
+                    }
+                    else {
+                        registrationNumber = Integer.parseInt(registrationEditText.getText().toString());
+                    }
+                    date = Integer.parseInt(dateEditText.getText().toString());
 
                     mAddress.setName(nameString);
                     mAddress.setRegistrationNumber(registrationNumber);
+                    mAddress.setDate(date);
 
                     long id = databaseQueryClass.updateAddressInfo(mAddress);
 

@@ -20,13 +20,13 @@ public class AddressCreateDialogFragment extends DialogFragment {
 
     private EditText nameEditText;
     private EditText registrationEditText;
-    private EditText phoneEditText;
-    private EditText emailEditText;
+    private EditText dateEditText;
     private Button createButton;
     private Button cancelButton;
 
     private String nameString = "";
     private long registrationNumber = -1;
+    private long date = -1;
     private String phoneString = "";
     private String emailString = "";
 
@@ -55,6 +55,7 @@ public class AddressCreateDialogFragment extends DialogFragment {
 
         nameEditText = view.findViewById(R.id.addressNameEditText);
         registrationEditText = view.findViewById(R.id.registrationEditText);
+        dateEditText = view.findViewById(R.id.dateEditText);
         createButton = view.findViewById(R.id.createButton);
         cancelButton = view.findViewById(R.id.cancelButton);
 
@@ -65,9 +66,15 @@ public class AddressCreateDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 nameString = nameEditText.getText().toString();
-                registrationNumber = Integer.parseInt(registrationEditText.getText().toString());
+                if ("".equals(registrationEditText.getText().toString())) {
+                    registrationNumber = 1;
+                }
+                else {
+                    registrationNumber = Integer.parseInt(registrationEditText.getText().toString());
+                }
+                date = Integer.parseInt(dateEditText.getText().toString());
 
-                Address address = new Address(-1, nameString, registrationNumber);
+                Address address = new Address(-1, nameString, registrationNumber, date);
 
                 DatabaseQueryClass databaseQueryClass = new DatabaseQueryClass(getContext());
 

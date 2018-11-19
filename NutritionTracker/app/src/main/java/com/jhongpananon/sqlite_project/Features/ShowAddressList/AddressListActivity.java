@@ -23,6 +23,7 @@ import com.jhongpananon.sqlite_project.MapsActivity;
 import com.jhongpananon.sqlite_project.R;
 import com.jhongpananon.sqlite_project.Util.Config;
 //import com.jhongpananon.sqlite_project.mapwithmarker.MapsMarkerActivity;
+import com.jhongpananon.sqlite_project.graphFragment;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import android.support.v4.widget.DrawerLayout;
@@ -65,6 +66,14 @@ public class AddressListActivity extends AppCompatActivity implements AddressCre
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAddressCreateDialog();
+            }
+        });
+
+        FloatingActionButton fab_graph = (FloatingActionButton) findViewById(R.id.fab_graph);
+        fab_graph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openAddressCreateDialog();
