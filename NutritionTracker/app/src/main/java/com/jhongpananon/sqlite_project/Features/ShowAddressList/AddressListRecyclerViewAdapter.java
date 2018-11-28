@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.jhongpananon.sqlite_project.Database.DatabaseQueryClass;
-import com.jhongpananon.sqlite_project.Features.CreateAddress.Address;
+import com.jhongpananon.sqlite_project.Features.CreateAddress.Exercise;
 import com.jhongpananon.sqlite_project.Features.UpdateAddressInfo.AddressUpdateDialogFragment;
 import com.jhongpananon.sqlite_project.Features.UpdateAddressInfo.AddressUpdateListener;
 import com.jhongpananon.sqlite_project.R;
@@ -23,12 +23,12 @@ import java.util.List;
 public class AddressListRecyclerViewAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     private Context context;
-    private List<Address> addressList;
+    private List<Exercise> exerciseList;
     private DatabaseQueryClass databaseQueryClass;
 
-    public AddressListRecyclerViewAdapter(Context context, List<Address> addressList) {
+    public AddressListRecyclerViewAdapter(Context context, List<Exercise> exerciseList) {
         this.context = context;
-        this.addressList = addressList;
+        this.exerciseList = exerciseList;
         databaseQueryClass = new DatabaseQueryClass(context);
         Logger.addLogAdapter(new AndroidLogAdapter());
     }
@@ -42,16 +42,17 @@ public class AddressListRecyclerViewAdapter extends RecyclerView.Adapter<CustomV
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         final int itemPosition = position;
-        final Address address = addressList.get(position);
+        final Exercise exercise = exerciseList.get(position);
 
-        holder.nameTextView.setText(address.getName());
-        holder.registrationNumTextView.setText(String.valueOf(address.getRegistrationNumber()));
+        holder.nameTextView.setText(exercise.getName());
+        holder.registrationNumTextView.setText(String.valueOf(exercise.getRegistrationNumber()));
+        holder.registrationDate.setText(String.valueOf(exercise.getDate()));
 
         holder.crossButtonImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setMessage("Are you sure, You wanted to delete this address?");
+                alertDialogBuilder.setMessage("Are you sure, You wanted to delete this exercise?");
                         alertDialogBuilder.setPositiveButton("Yes",
                                 new DialogInterface.OnClickListener() {
                                     @Override
@@ -75,10 +76,10 @@ public class AddressListRecyclerViewAdapter extends RecyclerView.Adapter<CustomV
         holder.editButtonImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddressUpdateDialogFragment addressUpdateDialogFragment = AddressUpdateDialogFragment.newInstance(address.getRegistrationNumber(), itemPosition, new AddressUpdateListener() {
+                AddressUpdateDialogFragment addressUpdateDialogFragment = AddressUpdateDialogFragment.newInstance(exercise.getRegistrationNumber(), itemPosition, new AddressUpdateListener() {
                     @Override
-                    public void onAddressInfoUpdated(Address address, int position) {
-                        addressList.set(position, address);
+                    public void onAddressInfoUpdated(Exercise address, int position) {
+                        exerciseList.set(position, address);
                         notifyDataSetChanged();
                     }
                 });
@@ -88,21 +89,21 @@ public class AddressListRecyclerViewAdapter extends RecyclerView.Adapter<CustomV
     }
 
     private void deleteAddress(int position) {
-        Address address = addressList.get(position);
-        long count = databaseQueryClass.deleteAddressByRegNum(address.getRegistrationNumber());
+        Exercise exercise = exerciseList.get(position);
+        long count = databaseQueryClass.deleteAddressByRegNum(exercise.getRegistrationNumber());
 
         if(count>0){
-            addressList.remove(position);
+            exerciseList.remove(position);
             notifyDataSetChanged();
             ((AddressListActivity) context).viewVisibility();
-            Toast.makeText(context, "Address deleted successfully", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Exercise deleted successfully", Toast.LENGTH_LONG).show();
         } else
-            Toast.makeText(context, "Address not deleted. Something wrong!", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Exercise not deleted. Something wrong!", Toast.LENGTH_LONG).show();
 
     }
 
     @Override
     public int getItemCount() {
-        return addressList.size();
+        return exerciseList.size();
     }
 }

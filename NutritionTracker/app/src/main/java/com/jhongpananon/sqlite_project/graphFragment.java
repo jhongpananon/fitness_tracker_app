@@ -1,27 +1,25 @@
 package com.jhongpananon.sqlite_project;
 
 import android.app.Dialog;
-import android.os.Bundle;
+//import android.app.DialogFragment;
 import android.support.v4.app.DialogFragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.jhongpananon.sqlite_project.Database.DatabaseQueryClass;
-import com.jhongpananon.sqlite_project.Features.CreateAddress.Address;
-import com.jhongpananon.sqlite_project.Features.CreateAddress.AddressCreateDialogFragment;
-import com.jhongpananon.sqlite_project.Features.CreateAddress.AddressCreateListener;
-import com.jhongpananon.sqlite_project.Util.Config;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+//import android.support.v4.app.DialogFragment;
+
 
 public class graphFragment extends DialogFragment {
 
-    private static AddressCreateListener addressCreateListener;
+    private static GraphCreateListener graphCreateListener;
 
     private EditText nameEditText;
     private EditText registrationEditText;
@@ -39,9 +37,9 @@ public class graphFragment extends DialogFragment {
         // Required empty public constructor
     }
 
-//    public static graphFragment newInstance(String title, AddressCreateListener listener){
-//        addressCreateListener = listener;
-//        AddressCreateDialogFragment addressCreateDialogFragment = new AddressCreateDialogFragment();
+//    public static graphFragment newInstance(String title, GraphCreateListener listener){
+//        graphCreateListener = listener;
+//        graphFragment graphCreateDialogFragment = new graphFragment();
 //        Bundle args = new Bundle();
 //        args.putString("title", title);
 //        graphFragment.setArguments(args);
@@ -79,7 +77,7 @@ public class graphFragment extends DialogFragment {
 //                }
 //                date = Integer.parseInt(dateEditText.getText().toString());
 //
-//                Address address = new Address(-1, nameString, registrationNumber, date);
+//                Exercise address = new Exercise(-1, nameString, registrationNumber, date);
 //
 //                DatabaseQueryClass databaseQueryClass = new DatabaseQueryClass(getContext());
 //

@@ -8,16 +8,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.widget.Toast;
 
-import com.jhongpananon.sqlite_project.Features.CreateAddress.Address;
+import com.jhongpananon.sqlite_project.Features.CreateAddress.Exercise;
 import com.jhongpananon.sqlite_project.Util.Config;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DatabaseQueryClass {
+public class DatabaseQueryClass implements Serializable {
 
     private Context context;
 
@@ -26,16 +27,16 @@ public class DatabaseQueryClass {
         Logger.addLogAdapter(new AndroidLogAdapter());
     }
 
-    public long insertAddress(Address address){
+    public long insertAddress(Exercise exercise){
 
         long id = -1;
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(context);
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Config.COLUMN_EXERCISE_NAME, address.getName());
-        contentValues.put(Config.COLUMN_EXERCISE_NUM_REPS, address.getRegistrationNumber());
-        contentValues.put(Config.COLUMN_EXERCISE_DATE, address.getDate());
+        contentValues.put(Config.COLUMN_EXERCISE_NAME, exercise.getName());
+        contentValues.put(Config.COLUMN_EXERCISE_NUM_REPS, exercise.getRegistrationNumber());
+        contentValues.put(Config.COLUMN_EXERCISE_DATE, exercise.getDate());
 
         try {
             id = sqLiteDatabase.insertOrThrow(Config.TABLE_EXERCISE, null, contentValues);
@@ -49,7 +50,7 @@ public class DatabaseQueryClass {
         return id;
     }
 
-    public List<Address> getAllAddress(){
+    public List<Exercise> getAllExercises(){
 
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(context);
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
@@ -68,17 +69,17 @@ public class DatabaseQueryClass {
 
             if(cursor!=null)
                 if(cursor.moveToFirst()){
-                    List<Address> addressList = new ArrayList<>();
+                    List<Exercise> exerciseList = new ArrayList<>();
                     do {
                         int id = cursor.getInt(cursor.getColumnIndex(Config.COLUMN_EXERCISE_ID));
                         String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NAME));
                         long registrationNumber = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NUM_REPS));
                         long date = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_DATE));
 
-                        addressList.add(new Address(id, name, registrationNumber, date));
+                        exerciseList.add(new Exercise(id, name, registrationNumber, date));
                     }   while (cursor.moveToNext());
 
-                    return addressList;
+                    return exerciseList;
                 }
         } catch (Exception e){
             Logger.d("Exception: " + e.getMessage());
@@ -92,13 +93,13 @@ public class DatabaseQueryClass {
         return Collections.emptyList();
     }
 
-    public Address getAddressByRegNum(long registrationNum){
+    public Exercise getAddressByRegNum(long registrationNum){
 
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(context);
         SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
 
         Cursor cursor = null;
-        Address address = null;
+        Exercise exercise = null;
         try {
 
             cursor = sqLiteDatabase.query(Config.TABLE_EXERCISE, null,
@@ -117,7 +118,7 @@ public class DatabaseQueryClass {
                 String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NAME));
                 long registrationNumber = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NUM_REPS));
                 long date = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_DATE));
-                address = new Address(id, name, registrationNumber, date);
+                exercise = new Exercise(id, name, registrationNumber, date);
             }
         } catch (Exception e){
             Logger.d("Exception: " + e.getMessage());
@@ -128,24 +129,24 @@ public class DatabaseQueryClass {
             sqLiteDatabase.close();
         }
 
-        return address;
+        return exercise;
     }
 
-    public long updateAddressInfo(Address address){
+    public long updateAddressInfo(Exercise exercise){
 
         long rowCount = 0;
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(context);
         SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Config.COLUMN_EXERCISE_NAME, address.getName());
-        contentValues.put(Config.COLUMN_EXERCISE_NUM_REPS, address.getRegistrationNumber());
-        contentValues.put(Config.COLUMN_EXERCISE_DATE, address.getDate());
+        contentValues.put(Config.COLUMN_EXERCISE_NAME, exercise.getName());
+        contentValues.put(Config.COLUMN_EXERCISE_NUM_REPS, exercise.getRegistrationNumber());
+        contentValues.put(Config.COLUMN_EXERCISE_DATE, exercise.getDate());
 
         try {
             rowCount = sqLiteDatabase.update(Config.TABLE_EXERCISE, contentValues,
                     Config.COLUMN_EXERCISE_ID + " = ? ",
-                    new String[] {String.valueOf(address.getId())});
+                    new String[] {String.valueOf(exercise.getId())});
         } catch (SQLiteException e){
             Logger.d("Exception: " + e.getMessage());
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();

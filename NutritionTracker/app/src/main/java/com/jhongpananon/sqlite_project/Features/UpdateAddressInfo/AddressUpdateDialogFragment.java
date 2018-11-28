@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.jhongpananon.sqlite_project.Database.DatabaseQueryClass;
-import com.jhongpananon.sqlite_project.Features.CreateAddress.Address;
+import com.jhongpananon.sqlite_project.Features.CreateAddress.Exercise;
 import com.jhongpananon.sqlite_project.R;
 import com.jhongpananon.sqlite_project.Util.Config;
 
@@ -21,7 +21,7 @@ public class AddressUpdateDialogFragment extends DialogFragment {
     private static int addressItemPosition;
     private static AddressUpdateListener addressUpdateListener;
 
-    private Address mAddress;
+    private Exercise mExercise;
 
     private EditText nameEditText;
     private EditText registrationEditText;
@@ -74,12 +74,12 @@ public class AddressUpdateDialogFragment extends DialogFragment {
         String title = getArguments().getString(Config.TITLE);
         getDialog().setTitle(title);
 
-        mAddress = databaseQueryClass.getAddressByRegNum(addressRegNo);
+        mExercise = databaseQueryClass.getAddressByRegNum(addressRegNo);
 
-        if(mAddress!=null){
-            nameEditText.setText(mAddress.getName());
-            registrationEditText.setText(String.valueOf(mAddress.getRegistrationNumber()));
-            dateEditText.setText(String.valueOf(mAddress.getDate()));
+        if(mExercise !=null){
+            nameEditText.setText(mExercise.getName());
+            registrationEditText.setText(String.valueOf(mExercise.getRegistrationNumber()));
+            dateEditText.setText(String.valueOf(mExercise.getDate()));
 
             updateButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -93,14 +93,14 @@ public class AddressUpdateDialogFragment extends DialogFragment {
                     }
                     date = Integer.parseInt(dateEditText.getText().toString());
 
-                    mAddress.setName(nameString);
-                    mAddress.setRegistrationNumber(registrationNumber);
-                    mAddress.setDate(date);
+                    mExercise.setName(nameString);
+                    mExercise.setRegistrationNumber(registrationNumber);
+                    mExercise.setDate(date);
 
-                    long id = databaseQueryClass.updateAddressInfo(mAddress);
+                    long id = databaseQueryClass.updateAddressInfo(mExercise);
 
                     if(id>0){
-                        addressUpdateListener.onAddressInfoUpdated(mAddress, addressItemPosition);
+                        addressUpdateListener.onAddressInfoUpdated(mExercise, addressItemPosition);
                         getDialog().dismiss();
                     }
                 }

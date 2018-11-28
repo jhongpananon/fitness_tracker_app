@@ -11,8 +11,7 @@ public class CustomViewHolder extends RecyclerView.ViewHolder {
 
     TextView nameTextView;
     TextView registrationNumTextView;
-    TextView emailTextView;
-    TextView phoneTextView;
+    TextView registrationDate;
     ImageView crossButtonImageView;
     ImageView editButtonImageView;
 
@@ -21,6 +20,7 @@ public class CustomViewHolder extends RecyclerView.ViewHolder {
 
         nameTextView = itemView.findViewById(R.id.nameTextView);
         registrationNumTextView = itemView.findViewById(R.id.registrationNumTextView);
+        registrationDate = itemView.findViewById(R.id.registrationDate);
         crossButtonImageView = itemView.findViewById(R.id.crossImageView);
         editButtonImageView = itemView.findViewById(R.id.editImageView);
     }

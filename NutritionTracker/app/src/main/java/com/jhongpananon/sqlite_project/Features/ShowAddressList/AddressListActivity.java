@@ -1,10 +1,11 @@
 package com.jhongpananon.sqlite_project.Features.ShowAddressList;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
+//import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,13 +17,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jhongpananon.sqlite_project.Database.DatabaseQueryClass;
-import com.jhongpananon.sqlite_project.Features.CreateAddress.Address;
+import com.jhongpananon.sqlite_project.Features.CreateAddress.Exercise;
 import com.jhongpananon.sqlite_project.Features.CreateAddress.AddressCreateDialogFragment;
 import com.jhongpananon.sqlite_project.Features.CreateAddress.AddressCreateListener;
+import com.jhongpananon.sqlite_project.IntentHelper;
 import com.jhongpananon.sqlite_project.MapsActivity;
 import com.jhongpananon.sqlite_project.R;
 import com.jhongpananon.sqlite_project.Util.Config;
 //import com.jhongpananon.sqlite_project.mapwithmarker.MapsMarkerActivity;
+import com.jhongpananon.sqlite_project.displayGraph;
 import com.jhongpananon.sqlite_project.graphFragment;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -37,7 +40,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCre
 
     private DatabaseQueryClass databaseQueryClass = new DatabaseQueryClass(this);
 
-    private List<Address> addressList = new ArrayList<>();
+    private List<Exercise> exerciseList = new ArrayList<>();
 
     private TextView addressListEmptyTextView;
     private RecyclerView recyclerView;
@@ -56,9 +59,9 @@ public class AddressListActivity extends AppCompatActivity implements AddressCre
         recyclerView = (RecyclerView) findViewById(R.id.addressRecyclerView);
         addressListEmptyTextView = (TextView) findViewById(R.id.emptyAddressListTextView);
 
-        addressList.addAll(databaseQueryClass.getAllAddress());
+        exerciseList.addAll(databaseQueryClass.getAllExercises());
 
-        addressListRecyclerViewAdapter = new AddressListRecyclerViewAdapter(this, addressList);
+        addressListRecyclerViewAdapter = new AddressListRecyclerViewAdapter(this, exerciseList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(addressListRecyclerViewAdapter);
 
@@ -76,7 +79,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCre
         fab_graph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openAddressCreateDialog();
+                openGraphActivity();
             }
         });
 
@@ -122,9 +125,14 @@ public class AddressListActivity extends AppCompatActivity implements AddressCre
 
     private void openMapsActivity() {
         Intent intent = new Intent(this, MapsActivity.class);
+        IntentHelper.addObjectForKey(databaseQueryClass, "key");
         startActivity(intent);
     }
 
+    private void openGraphActivity() {
+        Intent intent = new Intent(this, displayGraph.class);
+        startActivity(intent);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -146,7 +154,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCre
                         public void onClick(DialogInterface arg0, int arg1) {
                             boolean isAllDeleted = databaseQueryClass.deleteAllAddresss();
                             if(isAllDeleted){
-                                addressList.clear();
+                                exerciseList.clear();
                                 addressListRecyclerViewAdapter.notifyDataSetChanged();
                                 viewVisibility();
                             }
@@ -168,7 +176,7 @@ public class AddressListActivity extends AppCompatActivity implements AddressCre
     }
 
     public void viewVisibility() {
-        if(addressList.isEmpty())
+        if(exerciseList.isEmpty())
             addressListEmptyTextView.setVisibility(View.VISIBLE);
         else
             addressListEmptyTextView.setVisibility(View.GONE);
@@ -179,12 +187,20 @@ public class AddressListActivity extends AppCompatActivity implements AddressCre
         addressCreateDialogFragment.show(getSupportFragmentManager(), Config.CREATE_ADDRESS);
     }
 
+
+    private void openGraphFragment() {
+        Bundle bundle=new Bundle();
+        graphFragment graph = new graphFragment();
+        graph.setArguments(bundle);
+    }
+
+
     @Override
-    public void onAddressCreated(Address address) {
-        addressList.add(address);
+    public void onAddressCreated(Exercise exercise) {
+        exerciseList.add(exercise);
         addressListRecyclerViewAdapter.notifyDataSetChanged();
         viewVisibility();
-        Logger.d(address.getName());
+        Logger.d(exercise.getName());
     }
 
 }

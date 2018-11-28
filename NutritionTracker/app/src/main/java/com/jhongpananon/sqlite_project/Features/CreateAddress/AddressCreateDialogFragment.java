@@ -1,6 +1,7 @@
 package com.jhongpananon.sqlite_project.Features.CreateAddress;
 
 import android.app.Dialog;
+//import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -74,15 +75,15 @@ public class AddressCreateDialogFragment extends DialogFragment {
                 }
                 date = Integer.parseInt(dateEditText.getText().toString());
 
-                Address address = new Address(-1, nameString, registrationNumber, date);
+                Exercise exercise = new Exercise(-1, nameString, registrationNumber, date);
 
                 DatabaseQueryClass databaseQueryClass = new DatabaseQueryClass(getContext());
 
-                long id = databaseQueryClass.insertAddress(address);
+                long id = databaseQueryClass.insertAddress(exercise);
 
                 if(id>0){
-                    address.setId(id);
-                    addressCreateListener.onAddressCreated(address);
+                    exercise.setId(id);
+                    addressCreateListener.onAddressCreated(exercise);
                     getDialog().dismiss();
                 }
             }
