@@ -37,6 +37,8 @@ public class DatabaseQueryClass implements Serializable {
         contentValues.put(Config.COLUMN_EXERCISE_NAME, exercise.getName());
         contentValues.put(Config.COLUMN_EXERCISE_NUM_REPS, exercise.getRegistrationNumber());
         contentValues.put(Config.COLUMN_EXERCISE_DATE, exercise.getDate());
+        contentValues.put(Config.COLUMN_EXERCISE_SET, exercise.getSet());
+        contentValues.put(Config.COLUMN_EXERCISE_WEIGHT, exercise.getWeight());
 
         try {
             id = sqLiteDatabase.insertOrThrow(Config.TABLE_EXERCISE, null, contentValues);
@@ -75,8 +77,10 @@ public class DatabaseQueryClass implements Serializable {
                         String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NAME));
                         long registrationNumber = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NUM_REPS));
                         long date = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_DATE));
+                        long set = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_SET));
+                        double weight = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_WEIGHT));
 
-                        exerciseList.add(new Exercise(id, name, registrationNumber, date));
+                        exerciseList.add(new Exercise(id, name, registrationNumber, date, set, weight));
                     }   while (cursor.moveToNext());
 
                     return exerciseList;
@@ -118,7 +122,9 @@ public class DatabaseQueryClass implements Serializable {
                 String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NAME));
                 long registrationNumber = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NUM_REPS));
                 long date = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_DATE));
-                exercise = new Exercise(id, name, registrationNumber, date);
+                long set = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_SET));
+                double weight = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_WEIGHT));
+                exercise = new Exercise(id, name, registrationNumber, date, set, weight);
             }
         } catch (Exception e){
             Logger.d("Exception: " + e.getMessage());
@@ -142,6 +148,8 @@ public class DatabaseQueryClass implements Serializable {
         contentValues.put(Config.COLUMN_EXERCISE_NAME, exercise.getName());
         contentValues.put(Config.COLUMN_EXERCISE_NUM_REPS, exercise.getRegistrationNumber());
         contentValues.put(Config.COLUMN_EXERCISE_DATE, exercise.getDate());
+        contentValues.put(Config.COLUMN_EXERCISE_SET, exercise.getSet());
+        contentValues.put(Config.COLUMN_EXERCISE_SET, exercise.getWeight());
 
         try {
             rowCount = sqLiteDatabase.update(Config.TABLE_EXERCISE, contentValues,
@@ -166,6 +174,26 @@ public class DatabaseQueryClass implements Serializable {
             deletedRowCount = sqLiteDatabase.delete(Config.TABLE_EXERCISE,
                                     Config.COLUMN_EXERCISE_NUM_REPS + " = ? ",
                                     new String[]{ String.valueOf(registrationNum)});
+        } catch (SQLiteException e){
+            Logger.d("Exception: " + e.getMessage());
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+        } finally {
+            sqLiteDatabase.close();
+        }
+
+        return deletedRowCount;
+    }
+
+    public long deleteAllExerciseByDate(long date)
+    {
+        long deletedRowCount = -1;
+        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(context);
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
+
+        try {
+            deletedRowCount = sqLiteDatabase.delete(Config.TABLE_EXERCISE,
+                    Config.COLUMN_EXERCISE_DATE + " = ? ",
+                    new String[]{ String.valueOf(date)});
         } catch (SQLiteException e){
             Logger.d("Exception: " + e.getMessage());
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();

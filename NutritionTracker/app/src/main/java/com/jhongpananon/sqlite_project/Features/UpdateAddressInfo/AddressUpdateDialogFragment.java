@@ -26,13 +26,14 @@ public class AddressUpdateDialogFragment extends DialogFragment {
     private EditText nameEditText;
     private EditText registrationEditText;
     private EditText dateEditText;
-    private EditText emailEditText;
+    private EditText setEditText;
     private Button updateButton;
     private Button cancelButton;
 
     private String nameString = "";
     private long registrationNumber = -1;
     private long date = -1;
+    private long set = -1;
     private String phoneString = "";
     private String emailString = "";
 
@@ -65,9 +66,9 @@ public class AddressUpdateDialogFragment extends DialogFragment {
 
         databaseQueryClass = new DatabaseQueryClass(getContext());
 
-        nameEditText = view.findViewById(R.id.addressNameEditText);
-        registrationEditText = view.findViewById(R.id.registrationEditText);
-        dateEditText = view.findViewById(R.id.dateEditText);
+        nameEditText = view.findViewById(R.id.exerciseNameEditText);
+        registrationEditText = view.findViewById(R.id.repsEditText);
+        dateEditText = view.findViewById(R.id.workoutDateEditText);
         updateButton = view.findViewById(R.id.updateAddressInfoButton);
         cancelButton = view.findViewById(R.id.cancelButton);
 
@@ -96,6 +97,7 @@ public class AddressUpdateDialogFragment extends DialogFragment {
                     mExercise.setName(nameString);
                     mExercise.setRegistrationNumber(registrationNumber);
                     mExercise.setDate(date);
+                    mExercise.setSet(-1);
 
                     long id = databaseQueryClass.updateAddressInfo(mExercise);
 

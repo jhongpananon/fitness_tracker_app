@@ -39,7 +39,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + Config.COLUMN_EXERCISE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + Config.COLUMN_EXERCISE_NAME + " TEXT NOT NULL, "
                 + Config.COLUMN_EXERCISE_NUM_REPS + " INTEGER NOT NULL, "
-                + Config.COLUMN_EXERCISE_DATE + " INTEGER NOT NULL "
+                + Config.COLUMN_EXERCISE_DATE + " INTEGER NOT NULL, "
+                + Config.COLUMN_EXERCISE_SET + " INTEGER NOT NULL, "
+                + Config.COLUMN_EXERCISE_WEIGHT + " REAL NOT NULL "
                 + ")";
 
         Logger.d("Table create SQL: " + CREATE_ADDRESS_TABLE);

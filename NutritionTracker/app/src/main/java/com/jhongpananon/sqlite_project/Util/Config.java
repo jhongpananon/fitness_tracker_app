@@ -10,7 +10,8 @@ public class Config {
     public static final String COLUMN_EXERCISE_NAME = "name";
     public static final String COLUMN_EXERCISE_NUM_REPS = "registration_no";
     public static final String COLUMN_EXERCISE_DATE = "phone";
-    public static final String COLUMN_ADDRESS_EMAIL = "email";
+    public static final String COLUMN_EXERCISE_SET = "setNum";
+    public static final String COLUMN_EXERCISE_WEIGHT = "weight";
 
     //others for general purpose key-value pair data
     public static final String TITLE = "title";

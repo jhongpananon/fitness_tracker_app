@@ -16,7 +16,7 @@
     <string name="cancel_button">Cancel</string>
     <string name="create_button">Create</string>
     <string name="all_delete">All Delete</string>
-    <string name="edit_button_description">Edit Ssngle workout information</string>
+    <string name="edit_button_description">Edit Single workout information</string>
     <string name="title_activity_maps">Nearby Gym Locations!</string>
 
     <string name="default_info_title">Default Location</string>

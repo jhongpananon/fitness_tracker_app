@@ -7,18 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 
 import com.jhongpananon.sqlite_project.Database.DatabaseQueryClass;
 import com.jhongpananon.sqlite_project.Features.CreateAddress.Exercise;
-import com.jhongpananon.sqlite_project.R;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -27,50 +23,93 @@ import java.util.List;
 public class displayGraph extends AppCompatActivity {
 
     private List<Exercise> exerciseList = new ArrayList<>();
+    private List<Exercise> filteredByName = new ArrayList<>();
+    private List<Exercise> filteredByWeight = new ArrayList<>();
     private DatabaseQueryClass databaseQueryClass = new DatabaseQueryClass(this);
+    private String exerciseName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        exerciseName = getIntent().getStringExtra("exercise_name");
+        Log.i("exerciseName", exerciseName);
         super.onCreate(savedInstanceState);
         exerciseList.addAll(databaseQueryClass.getAllExercises());
+
+        for(int i = 0; i < exerciseList.size(); i++)
+        {
+            Exercise exercise = exerciseList.get(i);
+            if(exerciseName.equals(exercise.getName()))
+            {
+                filteredByName.add(exercise);
+            }
+
+        }
+
+        Collections.sort(exerciseList, new CustomComparator());
+        Collections.sort(filteredByName, new CustomComparator());
+        Exercise exerciseByName =  exerciseList.get(0);
+
+        double maxWeight = 0.0;
+        long prevDate = 0;
+
+
+        for(int i = 0; i < exerciseList.size(); i++)
+        {
+            Exercise exercise = exerciseList.get(i);
+            if(prevDate != exercise.getDate())
+            {
+                Log.i("exercise date", Long.toString(exerciseByName.getDate()));
+                Log.i("maxWeight", Double.toString(maxWeight));
+                Log.i("exerciseByName", Double.toString(exerciseByName.getWeight()));
+                maxWeight = 0.0;
+                prevDate = exercise.getDate();
+                filteredByWeight.add(exerciseByName);
+            }
+            for(int j = 0; j < filteredByName.size(); j++)
+            {
+
+                exerciseByName = filteredByName.get(j);
+                if(exercise.getDate() == filteredByName.get(j).getDate())
+                {
+                    if(filteredByName.get(j).getWeight() > maxWeight)
+                    {
+                        maxWeight = exercise.getWeight();
+                    }
+                }
+            }
+        }
 
 
         setContentView(R.layout.activity_display_graph);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-//        cancelButton.setOnClickListener(new View.OnClickListener() {
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                getDialog().dismiss();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
 //            }
 //        });
 
 
-        Collections.sort(exerciseList, new CustomComparator());
+        Collections.sort(filteredByWeight, new CustomComparator());
 
         LineGraphSeries<DataPoint> series = new LineGraphSeries();
         long maxDate = 0;
-        for(int i = 0; i < exerciseList.size(); i++)
+        for(int i = 0; i < filteredByWeight.size(); i++)
         {
-            Log.i("num exercises", Integer.toString(exerciseList.size()));
+            Log.i("num exercises", Integer.toString(filteredByWeight.size()));
             Log.i("exercise", Integer.toString(i));
-            Log.i("exercise", Long.toString(exerciseList.get(i).getRegistrationNumber()));
-            Log.i("exercise date", Long.toString(exerciseList.get(i).getDate()));
-            if(exerciseList.get(i).getDate() > maxDate)
+            Log.i("exercise reps", Long.toString(filteredByWeight.get(i).getRegistrationNumber()));
+            Log.i("exercise date", Long.toString(filteredByWeight.get(i).getDate()));
+            Log.i("exercise weight", Double.toString(filteredByWeight.get(i).getWeight()));
+            if(filteredByWeight.get(i).getDate() > maxDate)
             {
-                maxDate = exerciseList.get(i).getDate();
+                maxDate = filteredByWeight.get(i).getDate();
             }
-            series.appendData(new DataPoint((double)exerciseList.get(i).getDate(), (double)exerciseList.get(i).getRegistrationNumber()), true, 10, true);
+            series.appendData(new DataPoint((double)filteredByWeight.get(i).getDate(), filteredByWeight.get(i).getWeight()), true, 10, true);
         }
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
@@ -84,7 +123,7 @@ public class displayGraph extends AppCompatActivity {
         graph.addSeries(series);
     }
 
-    private class CustomComparator implements Comparator<Exercise> {
+    public static class CustomComparator implements Comparator<Exercise> {
         @Override
         public int compare(Exercise o1, Exercise o2) {
             int retval = 0;
@@ -98,6 +137,11 @@ public class displayGraph extends AppCompatActivity {
             }
             return retval;
         }
+    }
+
+    public void swapMax(Exercise exercise)
+    {
+
     }
 
 }

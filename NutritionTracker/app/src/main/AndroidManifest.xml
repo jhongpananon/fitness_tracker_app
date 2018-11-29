@@ -22,13 +22,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Features.ShowAddressList.AddressListActivity"
+            android:name=".Features.ShowAddressList.WorkoutListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Features.ShowAddressList.SessionListActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Features.ShowAddressList.ExerciseListActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
             </intent-filter>
         </activity>
         <!--
@@ -46,11 +64,11 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:parentActivityName=".Features.ShowAddressList.AddressListActivity"
+            android:parentActivityName=".Features.ShowAddressList.SessionListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jhongpananon.sqlite_project.Features.ShowAddressList.AddressListActivity" />
+                android:value="com.jhongpananon.sqlite_project.Features.ShowAddressList.SessionListActivity" />
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,7 +88,7 @@
         <activity
             android:name=".displayGraph"
             android:label="@string/title_activity_display_graph"
-            android:parentActivityName=".Features.ShowAddressList.AddressListActivity"
+            android:parentActivityName=".Features.ShowAddressList.SessionListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

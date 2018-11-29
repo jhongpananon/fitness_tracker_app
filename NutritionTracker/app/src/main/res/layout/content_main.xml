@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Features.ShowAddressList.AddressListActivity"
+    tools:context=".Features.ShowAddressList.SessionListActivity"
     tools:showIn="@layout/activity_address_list"
     android:layout_marginBottom="8dp">
 

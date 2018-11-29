@@ -12,7 +12,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_shadow"
-    tools:context=".Features.ShowAddressList.AddressListActivity">
+    tools:context=".Features.ShowAddressList.SessionListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -38,14 +38,6 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_person_add_white_24dp" />
 
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_graph"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/googleg_standard_color_18" />
 
     <!--<android.support.design.widget.FloatingActionButton-->
         <!--android:id="@+id/fab2"-->
