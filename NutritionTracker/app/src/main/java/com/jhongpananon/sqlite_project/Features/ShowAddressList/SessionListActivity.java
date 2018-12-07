@@ -65,7 +65,8 @@ public class SessionListActivity extends AppCompatActivity implements SessionCre
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Logger.addLogAdapter(new AndroidLogAdapter());
-        this.setTitle("Workout".toUpperCase());
+
+        this.setTitle("Workout on " + Long.toString(date));
 
         addressListEmptyTextView = (TextView) findViewById(R.id.emptyAddressListTextView);
         recyclerView = (RecyclerView) findViewById(R.id.addressRecyclerView);
@@ -221,7 +222,7 @@ public class SessionListActivity extends AppCompatActivity implements SessionCre
 
     @Override
     public void onSessionCreated(Exercise exercise) {
-        exerciseList.add(exercise);
+        filteredExerciseList.add(exercise);
         sessionListRecyclerViewAdapter.notifyDataSetChanged();
         viewVisibility();
         Logger.d(exercise.getName());

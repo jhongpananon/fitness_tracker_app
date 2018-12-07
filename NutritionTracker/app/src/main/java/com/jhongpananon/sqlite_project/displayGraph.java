@@ -1,12 +1,9 @@
 package com.jhongpananon.sqlite_project;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 
 import com.jhongpananon.sqlite_project.Database.DatabaseQueryClass;
 import com.jhongpananon.sqlite_project.Features.CreateAddress.Exercise;
@@ -25,6 +22,7 @@ public class displayGraph extends AppCompatActivity {
     private List<Exercise> exerciseList = new ArrayList<>();
     private List<Exercise> filteredByName = new ArrayList<>();
     private List<Exercise> filteredByWeight = new ArrayList<>();
+    private List<Exercise> exerciseListByName = new ArrayList<>();
     private DatabaseQueryClass databaseQueryClass = new DatabaseQueryClass(this);
     private String exerciseName = "";
 
@@ -34,48 +32,40 @@ public class displayGraph extends AppCompatActivity {
         Log.i("exerciseName", exerciseName);
         super.onCreate(savedInstanceState);
         exerciseList.addAll(databaseQueryClass.getAllExercises());
+        exerciseListByName.addAll(databaseQueryClass.getExerciseByName(exerciseName));
+        Log.i("exerciseListByName", Long.toString(exerciseListByName.size()));
 
-        for(int i = 0; i < exerciseList.size(); i++)
-        {
-            Exercise exercise = exerciseList.get(i);
-            if(exerciseName.equals(exercise.getName()))
-            {
-                filteredByName.add(exercise);
-            }
 
-        }
-
-        Collections.sort(exerciseList, new CustomComparator());
-        Collections.sort(filteredByName, new CustomComparator());
-        Exercise exerciseByName =  exerciseList.get(0);
+        Collections.sort(exerciseListByName, new CustomComparator());
 
         double maxWeight = 0.0;
         long prevDate = 0;
+        int saveIndex = 0;
+        Exercise exercise = exerciseListByName.get(0);
+        Exercise prevExercise = exerciseListByName.get(0);
 
 
-        for(int i = 0; i < exerciseList.size(); i++)
+
+        for(int i = 0; i < exerciseListByName.size(); i++)
         {
-            Exercise exercise = exerciseList.get(i);
-            if(prevDate != exercise.getDate())
+            exercise = exerciseListByName.get(i);
+            if(exercise.getDate() != prevExercise.getDate())
             {
-                Log.i("exercise date", Long.toString(exerciseByName.getDate()));
-                Log.i("maxWeight", Double.toString(maxWeight));
-                Log.i("exerciseByName", Double.toString(exerciseByName.getWeight()));
+                filteredByWeight.add(exerciseListByName.get(saveIndex));
+                saveIndex = i;
+                prevExercise = exercise;
                 maxWeight = 0.0;
-                prevDate = exercise.getDate();
-                filteredByWeight.add(exerciseByName);
             }
-            for(int j = 0; j < filteredByName.size(); j++)
+            else
             {
-
-                exerciseByName = filteredByName.get(j);
-                if(exercise.getDate() == filteredByName.get(j).getDate())
+                if(exercise.getWeight() > maxWeight)
                 {
-                    if(filteredByName.get(j).getWeight() > maxWeight)
-                    {
-                        maxWeight = exercise.getWeight();
-                    }
+                    saveIndex = i;
                 }
+            }
+            if(i == exerciseListByName.size() - 1)
+            {
+                filteredByWeight.add(exerciseListByName.get(saveIndex));
             }
         }
 

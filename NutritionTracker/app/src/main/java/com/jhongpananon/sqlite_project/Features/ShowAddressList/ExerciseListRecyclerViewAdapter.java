@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,8 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
 //        holder.registrationNumTextView.setText(String.valueOf(exercise.getRegistrationNumber()));
         holder.weightTextView.setText(String.valueOf(exercise.getWeight()));
         holder.setTextView.setText(String.valueOf(exercise.getSet()));
+        holder.repsTextView.setText((String.valueOf(exercise.getRegistrationNumber())));
+        Log.i("repsTextView", Long.toString(exercise.getRegistrationNumber()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +97,7 @@ public class ExerciseListRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
                         notifyDataSetChanged();
                     }
                 });
-                addressUpdateDialogFragment.show(((SessionListActivity) context).getSupportFragmentManager(), Config.UPDATE_ADDRESS);
+                addressUpdateDialogFragment.show(((ExerciseListActivity) context).getSupportFragmentManager(), Config.UPDATE_ADDRESS);
             }
         });
     }

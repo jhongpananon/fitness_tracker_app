@@ -88,24 +88,28 @@ public class WorkoutCreateDialogFragment extends DialogFragment {
                     if(exerciseList.get(i).getDate() == date)
                     {
                         uniqueEntry = false;
-                        Intent intent = new Intent(view.getContext(), SessionListActivity.class);
-                        intent.putExtra("date", exerciseList.get(i).getDate());
-                        view.getContext().startActivity(intent);
                     }
                 }
 
-                if(uniqueEntry)
+                if(true)
                 {
                     Exercise exercise = new Exercise(-1, nameString, registrationNumber, date, set, weight);
 
                     DatabaseQueryClass databaseQueryClass = new DatabaseQueryClass(getContext());
 
-                    long id = databaseQueryClass.insertAddress(exercise);
+                    long id = databaseQueryClass.insertWorkout(exercise);
 
                     if(id>0){
                         exercise.setId(id);
                         workoutCreateListener.onWorkoutCreated(exercise);
                         getDialog().dismiss();
+                    }
+                    else
+                    {
+                        getDialog().dismiss();
+                        Intent intent = new Intent(view.getContext(), SessionListActivity.class);
+                        intent.putExtra("date", date);
+                        view.getContext().startActivity(intent);
                     }
                 }
 

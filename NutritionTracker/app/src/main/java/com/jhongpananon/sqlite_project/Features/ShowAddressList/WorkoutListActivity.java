@@ -236,8 +236,9 @@ public class WorkoutListActivity extends AppCompatActivity implements WorkoutCre
 
     @Override
     public void onWorkoutCreated(Exercise exercise) {
-        exerciseList.add(exercise);
-        WorkoutListRecyclerViewAdapter.notifyDataSetChanged();
+        filteredExerciseList.add(exercise);
+        Collections.sort(filteredExerciseList, new displayGraph.CustomComparator());
+        WorkoutListRecyclerViewAdapter.updateList();
         viewVisibility();
         Logger.d(exercise.getName());
     }

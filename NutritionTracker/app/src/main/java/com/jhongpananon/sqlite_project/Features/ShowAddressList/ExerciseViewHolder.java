@@ -11,7 +11,7 @@ public class ExerciseViewHolder extends RecyclerView.ViewHolder {
 
     TextView nameTextView;
     TextView weightTextView;
-    TextView registrationDate;
+    TextView repsTextView;
     TextView setTextView;
     ImageView crossButtonImageView;
     ImageView editButtonImageView;
@@ -22,7 +22,7 @@ public class ExerciseViewHolder extends RecyclerView.ViewHolder {
         nameTextView = itemView.findViewById(R.id.exerciseTextView);
         weightTextView = itemView.findViewById(R.id.weightTextView);
         setTextView = itemView.findViewById(R.id.setTextView);
-        registrationDate = itemView.findViewById(R.id.registrationDate);
+        repsTextView = itemView.findViewById(R.id.repsTextView);
         crossButtonImageView = itemView.findViewById(R.id.crossImageView);
         editButtonImageView = itemView.findViewById(R.id.editImageView);
     }

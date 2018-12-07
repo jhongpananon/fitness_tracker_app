@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.jhongpananon.sqlite_project.Features.CreateAddress.Exercise;
@@ -25,6 +26,42 @@ public class DatabaseQueryClass implements Serializable {
     public DatabaseQueryClass(Context context){
         this.context = context;
         Logger.addLogAdapter(new AndroidLogAdapter());
+    }
+
+    public long insertWorkout(Exercise exercise){
+
+        long id = -1;
+
+        List<Exercise> exerciseList = new ArrayList<>();
+        exerciseList.addAll(getExerciseByDate(exercise.getDate()));
+        Log.i("addingNewWorkout", Integer.toString(exerciseList.size()));
+
+
+        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(context);
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getWritableDatabase();
+
+
+        if(exerciseList.size() == 0)
+        {
+            Log.i("addingNewWorkout", "Adding a new unique workout!");
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Config.COLUMN_EXERCISE_NAME, exercise.getName());
+            contentValues.put(Config.COLUMN_EXERCISE_NUM_REPS, exercise.getRegistrationNumber());
+            contentValues.put(Config.COLUMN_EXERCISE_DATE, exercise.getDate());
+            contentValues.put(Config.COLUMN_EXERCISE_SET, exercise.getSet());
+            contentValues.put(Config.COLUMN_EXERCISE_WEIGHT, exercise.getWeight());
+
+            try {
+                id = sqLiteDatabase.insertOrThrow(Config.TABLE_EXERCISE, null, contentValues);
+            } catch (SQLiteException e){
+                Logger.d("Exception: " + e.getMessage());
+                Toast.makeText(context, "Operation failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            } finally {
+                sqLiteDatabase.close();
+            }
+        }
+
+        return id;
     }
 
     public long insertAddress(Exercise exercise){
@@ -97,6 +134,96 @@ public class DatabaseQueryClass implements Serializable {
         return Collections.emptyList();
     }
 
+    public List<Exercise> getExerciseByName(String exerciseName){
+
+        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(context);
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
+        String whereString = Config.COLUMN_EXERCISE_NAME + " LIKE " + "\'" + exerciseName + "\'";
+
+        Cursor cursor = null;
+        try {
+
+            cursor = sqLiteDatabase.query(Config.TABLE_EXERCISE, null, whereString, null, null,null, null);
+            /**
+             // If you want to execute raw query then uncomment below 2 lines. And comment out above line.
+
+             String SELECT_QUERY = String.format("SELECT %s, %s, %s, %s, %s FROM %s", Config.COLUMN_EXERCISE_ID, Config.COLUMN_EXERCISE_NAME, Config.COLUMN_EXERCISE_NUM_REPS, Config.COLUMN_ADDRESS_EMAIL, Config.COLUMN_EXERCISE_DATE, Config.TABLE_EXERCISE);
+             cursor = sqLiteDatabase.rawQuery(SELECT_QUERY, null);
+             */
+
+            if(cursor!=null)
+                if(cursor.moveToFirst()){
+                    List<Exercise> exerciseList = new ArrayList<>();
+                    do {
+                        int id = cursor.getInt(cursor.getColumnIndex(Config.COLUMN_EXERCISE_ID));
+                        String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NAME));
+                        long registrationNumber = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NUM_REPS));
+                        long date = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_DATE));
+                        long set = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_SET));
+                        double weight = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_WEIGHT));
+
+                        exerciseList.add(new Exercise(id, name, registrationNumber, date, set, weight));
+                    }   while (cursor.moveToNext());
+
+                    return exerciseList;
+                }
+        } catch (Exception e){
+            Logger.d("Exception: " + e.getMessage());
+            Toast.makeText(context, "Operation failed", Toast.LENGTH_SHORT).show();
+        } finally {
+            if(cursor!=null)
+                cursor.close();
+            sqLiteDatabase.close();
+        }
+
+        return Collections.emptyList();
+    }
+
+    public List<Exercise> getExerciseByDate(long exerciseDate){
+
+        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(context);
+        SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
+        String whereString = Config.COLUMN_EXERCISE_NAME + " LIKE " + "\'" + Long.toString(exerciseDate) + "\'";
+
+        Cursor cursor = null;
+        try {
+
+            cursor = sqLiteDatabase.query(Config.TABLE_EXERCISE, null, whereString, null, null,null, null);
+            /**
+             // If you want to execute raw query then uncomment below 2 lines. And comment out above line.
+
+             String SELECT_QUERY = String.format("SELECT %s, %s, %s, %s, %s FROM %s", Config.COLUMN_EXERCISE_ID, Config.COLUMN_EXERCISE_NAME, Config.COLUMN_EXERCISE_NUM_REPS, Config.COLUMN_ADDRESS_EMAIL, Config.COLUMN_EXERCISE_DATE, Config.TABLE_EXERCISE);
+             cursor = sqLiteDatabase.rawQuery(SELECT_QUERY, null);
+             */
+
+            if(cursor!=null)
+                if(cursor.moveToFirst()){
+                    List<Exercise> exerciseList = new ArrayList<>();
+                    do {
+                        int id = cursor.getInt(cursor.getColumnIndex(Config.COLUMN_EXERCISE_ID));
+                        String name = cursor.getString(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NAME));
+                        long registrationNumber = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_NUM_REPS));
+                        long date = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_DATE));
+                        long set = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_SET));
+                        double weight = cursor.getLong(cursor.getColumnIndex(Config.COLUMN_EXERCISE_WEIGHT));
+
+                        exerciseList.add(new Exercise(id, name, registrationNumber, date, set, weight));
+                    }   while (cursor.moveToNext());
+
+                    return exerciseList;
+                }
+        } catch (Exception e){
+            Logger.d("Exception: " + e.getMessage());
+//            Toast.makeText(context, "Operation failed", Toast.LENGTH_SHORT).show();
+        } finally {
+            if(cursor!=null)
+                cursor.close();
+            sqLiteDatabase.close();
+        }
+
+        return Collections.emptyList();
+    }
+
     public Exercise getAddressByRegNum(long registrationNum){
 
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(context);
@@ -137,6 +264,7 @@ public class DatabaseQueryClass implements Serializable {
 
         return exercise;
     }
+
 
     public long updateAddressInfo(Exercise exercise){
 

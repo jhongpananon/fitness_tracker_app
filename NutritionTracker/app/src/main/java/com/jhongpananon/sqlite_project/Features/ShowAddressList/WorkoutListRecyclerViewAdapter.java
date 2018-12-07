@@ -96,4 +96,9 @@ public class WorkoutListRecyclerViewAdapter extends RecyclerView.Adapter<Workout
     public int getItemCount() {
         return exerciseList.size();
     }
+
+    public void updateList()
+    {
+        this.notifyDataSetChanged();
+    }
 }

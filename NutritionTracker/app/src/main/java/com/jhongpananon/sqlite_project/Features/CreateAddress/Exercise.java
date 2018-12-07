@@ -9,6 +9,7 @@ public class Exercise implements Serializable {
     private long date;
     private long set;
     private double weight;
+    private long reps;
 
     public Exercise(int id, String name, long registrationNumber, long date, long set, double weight) {
         this.id = id;
@@ -51,4 +52,5 @@ public class Exercise implements Serializable {
 
     public double getWeight() { return weight; }
     public void setWeight(long set) { this.weight = weight; }
+
 }

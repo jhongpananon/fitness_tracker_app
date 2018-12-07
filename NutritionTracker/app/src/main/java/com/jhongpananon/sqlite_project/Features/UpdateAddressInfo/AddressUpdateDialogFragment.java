@@ -27,6 +27,7 @@ public class AddressUpdateDialogFragment extends DialogFragment {
     private EditText registrationEditText;
     private EditText dateEditText;
     private EditText setEditText;
+    private EditText weightEditText;
     private Button updateButton;
     private Button cancelButton;
 
@@ -34,6 +35,7 @@ public class AddressUpdateDialogFragment extends DialogFragment {
     private long registrationNumber = -1;
     private long date = -1;
     private long set = -1;
+    private long weight = -1;
     private String phoneString = "";
     private String emailString = "";
 
@@ -71,6 +73,7 @@ public class AddressUpdateDialogFragment extends DialogFragment {
         dateEditText = view.findViewById(R.id.workoutDateEditText);
         updateButton = view.findViewById(R.id.updateAddressInfoButton);
         cancelButton = view.findViewById(R.id.cancelButton);
+        weightEditText = view.findViewById((R.id.weightEditText));
 
         String title = getArguments().getString(Config.TITLE);
         getDialog().setTitle(title);
@@ -81,6 +84,7 @@ public class AddressUpdateDialogFragment extends DialogFragment {
             nameEditText.setText(mExercise.getName());
             registrationEditText.setText(String.valueOf(mExercise.getRegistrationNumber()));
             dateEditText.setText(String.valueOf(mExercise.getDate()));
+            weightEditText.setText(String.valueOf(mExercise.getWeight()));
 
             updateButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -93,11 +97,13 @@ public class AddressUpdateDialogFragment extends DialogFragment {
                         registrationNumber = Integer.parseInt(registrationEditText.getText().toString());
                     }
                     date = Integer.parseInt(dateEditText.getText().toString());
+                    weight = Long.parseLong(weightEditText.getText().toString());
 
                     mExercise.setName(nameString);
                     mExercise.setRegistrationNumber(registrationNumber);
                     mExercise.setDate(date);
                     mExercise.setSet(-1);
+                    mExercise.setWeight(weight);
 
                     long id = databaseQueryClass.updateAddressInfo(mExercise);
 

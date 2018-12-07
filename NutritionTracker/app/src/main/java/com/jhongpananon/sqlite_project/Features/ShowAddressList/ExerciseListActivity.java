@@ -226,8 +226,8 @@ public class ExerciseListActivity extends AppCompatActivity implements ExerciseC
 
     @Override
     public void onExerciseCreated(Exercise exercise) {
-        exerciseList.add(exercise);
-        exerciseListRecyclerViewAdapter.notifyItemInserted(exerciseList.size());
+        filteredExerciseList.add(exercise);
+//        exerciseListRecyclerViewAdapter.notifyItemInserted(exerciseList.size());
         exerciseListRecyclerViewAdapter.notifyDataSetChanged();
         viewVisibility();
         Logger.d(exercise.getName());

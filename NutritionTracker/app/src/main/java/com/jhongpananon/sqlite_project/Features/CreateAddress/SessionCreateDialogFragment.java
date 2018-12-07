@@ -93,6 +93,7 @@ public class SessionCreateDialogFragment extends DialogFragment {
                     if(nameString.equals(exerciseList.get(i).getName()) && (exerciseList.get(i).getDate() == date))
                     {
                         uniqueEntry = false;
+                        getDialog().dismiss();
                         Intent intent = new Intent(view.getContext(), ExerciseListActivity.class);
                         intent.putExtra("exercise_name", exerciseList.get(i).getName());
                         intent.putExtra("exercise_date", exerciseList.get(i).getDate());

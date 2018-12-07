@@ -47,16 +47,39 @@
     android:layout_marginLeft="4dp"/>
 
     <TextView
+        android:id="@+id/repsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="8dp"
+        android:visibility="visible"
+        app:layout_constraintLeft_toRightOf="@id/repsTitle"
+        app:layout_constraintTop_toBottomOf="@id/setTitle"
+        tools:text="0" />
+    <TextView
+        android:id="@+id/repsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Reps"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setTitle"
+        tools:text="Reps" />
+    android:layout_marginStart="4dp"
+    android:layout_marginLeft="4dp"/>
+
+    <TextView
         android:id="@+id/setTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="8dp"
         android:visibility="visible"
-        app:layout_constraintLeft_toRightOf="@id/weightTitle"
+        app:layout_constraintLeft_toRightOf="@id/setTitle"
         app:layout_constraintTop_toBottomOf="@id/exerciseTextView"
         tools:text="0" />
-
     <TextView
         android:id="@+id/weightTitle"
         android:layout_width="wrap_content"
@@ -66,7 +89,7 @@
         android:textStyle="bold"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setTitle"
+        app:layout_constraintTop_toBottomOf="@+id/repsTitle"
         tools:text="Weight" />
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"/>
@@ -79,7 +102,7 @@
         android:layout_marginTop="8dp"
         android:visibility="visible"
         app:layout_constraintLeft_toRightOf="@id/weightTitle"
-        app:layout_constraintTop_toBottomOf="@id/setTitle"
+        app:layout_constraintTop_toBottomOf="@id/repsTitle"
         tools:text="0" />
 
     <ImageView
